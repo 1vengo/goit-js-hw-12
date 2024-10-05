@@ -24,8 +24,8 @@ export function renderImages(images) {
       `
     )
     .join('');
-  gallery.innerHTML = markup;
 
+  gallery.insertAdjacentHTML('beforeend', markup);
 
   if (!lightbox) {
     lightbox = new SimpleLightbox('.gallery a');
@@ -53,4 +53,23 @@ export function showLoadingIndicator() {
 
 export function hideLoadingIndicator() {
   document.querySelector('.loader').classList.remove('visible');
+}
+
+export function showLoadMoreButton() {
+  document.querySelector('.load-more').classList.remove('hidden');
+}
+
+export function hideLoadMoreButton() {
+  document.querySelector('.load-more').classList.add('hidden');
+}
+
+export function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }

@@ -5,12 +5,18 @@ import {
   clearGallery,
   showLoadingIndicator,
   hideLoadingIndicator,
+  showLoadMoreButton,
+  hideLoadMoreButton,
+  smoothScroll,
 } from './js/render-function.js';
 
 const form = document.querySelector('#search-form');
 const input = document.querySelector('input[name="searchQuery"]');
+const loadMoreBtn = document.querySelector('.load-more');
+
 let currentPage = 1;
 let currentQuery = '';
+let totalHits = 0;
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -23,8 +29,8 @@ form.addEventListener('submit', async (event) => {
 
   currentQuery = query;
   currentPage = 1;
-
   clearGallery();
+  hideLoadMoreButton();
   showLoadingIndicator();
 
   try {
@@ -36,9 +42,33 @@ form.addEventListener('submit', async (event) => {
       return;
     }
 
+    totalHits = data.totalHits;
     renderImages(data.hits);
+    showLoadMoreButton();
   } catch (error) {
     hideLoadingIndicator();
     showError('Something went wrong. Please try again later.');
+  }
+});
+
+loadMoreBtn.addEventListener('click', async () => {
+  currentPage += 1;
+  showLoadingIndicator();
+
+  try {
+    const data = await fetchImages(currentQuery, currentPage);
+    hideLoadingIndicator();
+
+    renderImages(data.hits);
+    smoothScroll();
+
+    const alreadyLoadedImages = currentPage * 15;
+    if (alreadyLoadedImages >= totalHits) {
+      hideLoadMoreButton();
+      showError("We're sorry, but you've reached the end of search results.");
+    }
+  } catch (error) {
+    hideLoadingIndicator();
+    showError('Failed to load more images. Please try again later.');
   }
 });

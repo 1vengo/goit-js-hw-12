@@ -36,12 +36,19 @@ main {
 main:has(.back-link) {
   text-align: center;
 }
+header{
+  Width: 100%;
+    Display: flex;
+    Justify-content: center;
+    align-items: center;
+}
 .gallery{
   width: 1150px;
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
   justify-content: center;
+  margin-bottom: 32px;
 }
 .search-form{
   width: 371px;
@@ -57,8 +64,13 @@ main:has(.back-link) {
 
 }
 .info{
-  display: flex;
-  gap: 28px;
+display: flex;
+  text-align: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+  text-align: center;
+  margin-top: 10px;
 
 }
 .btn{
@@ -92,4 +104,38 @@ main:has(.back-link) {
 }
 .btn:hover, .btn:focus{
   background: #6c8cff;
+}
+.load-more {
+  Width: 93px;
+
+border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+  background: #4e75ff;
+  cursor: pointer;
+  font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: #fff;
+    border: none;
+}
+
+.load-more.hidden {
+  display: none;
+}
+
+.loader {
+  display: none;
+  text-align: center;
+}
+
+.loader.visible {
+  display: block;
+}
+.load{
+Display: flex;
+  Justify-content: center;
+  align-items: center;
 }
